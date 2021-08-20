@@ -7,8 +7,11 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -80,17 +83,32 @@ public class MainActivity extends AppCompatActivity {
         btn_add_task.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
+                if(!et_add_task.getText().toString().equals("")){
+                    try {
 //                    dummyItem.add(new Item(-1, et_add_task.getText().toString(), false));
-                    db.addTask(new Item(-1, et_add_task.getText().toString(), false));
-                    adapter.setItem(db.getAllTask());
-                    adapter.notifyDataSetChanged();
-                } catch (Exception e){
-                    Toast.makeText(MainActivity.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
+                        db.addTask(new Item(-1, et_add_task.getText().toString(), false));
+                        adapter.setItem(db.getAllTask());
+                        adapter.notifyDataSetChanged();
+                    } catch (Exception e){
+                        Toast.makeText(MainActivity.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                    et_add_task.setText("");
+                    layout_add_task.setVisibility(View.GONE);
+                    hideKeyboard();
                 }
+
             }
         });
 
+
+    }
+
+    private void hideKeyboard() {
+        View view = this.getCurrentFocus();
+        if(view != null){
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
 
     }
 }
