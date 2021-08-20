@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout layout_add_task;
     private EditText et_add_task;
     private Button btn_add_task;
+    private TextView tv_credit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         layout_add_task = findViewById(R.id.layout_add_task);
         et_add_task = findViewById(R.id.et_add_task);
         btn_add_task = findViewById(R.id.btn_add_task);
+        tv_credit = findViewById(R.id.tv_credit);
 
         RecyclerViewToDoListAdapter adapter = new RecyclerViewToDoListAdapter(this);
         rv_todo_list.setAdapter(adapter);
@@ -72,10 +75,14 @@ public class MainActivity extends AppCompatActivity {
         fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(layout_add_task.getVisibility() == View.GONE){
                     layout_add_task.setVisibility(View.VISIBLE);
+                    tv_credit.setVisibility(View.GONE);
                 } else {
                     layout_add_task.setVisibility(View.GONE);
+                    tv_credit.setVisibility(View.VISIBLE);
+                    hideKeyboard();
                 }
             }
         });

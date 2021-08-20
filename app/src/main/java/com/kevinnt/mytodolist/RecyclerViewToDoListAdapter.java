@@ -3,6 +3,7 @@ package com.kevinnt.mytodolist;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,11 +46,11 @@ public class RecyclerViewToDoListAdapter extends RecyclerView.Adapter<RecyclerVi
         holder.cb_todo_item.setChecked(item.get(position).isChecked());
         if(item.get(position).isChecked()){
             holder.cb_todo_item.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-            holder.cb_todo_item.setBackgroundColor(R.color.grayedout);
+            holder.cb_todo_item.setBackgroundResource(R.drawable.layout_item_bg);
         }
         else {
             holder.cb_todo_item.setPaintFlags(holder.cb_todo_item.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
-            holder.cb_todo_item.setBackgroundColor(View.INVISIBLE);
+            holder.cb_todo_item.setBackgroundResource(0);
         }
 
         holder.cb_todo_item.setOnClickListener(new View.OnClickListener() {
@@ -59,14 +60,14 @@ public class RecyclerViewToDoListAdapter extends RecyclerView.Adapter<RecyclerVi
                     if(holder.cb_todo_item.isChecked()){
                         holder.cb_todo_item.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                         item.get(position).setChecked(true);
-                        holder.cb_todo_item.setBackgroundColor(R.color.grayedout);
+                        holder.cb_todo_item.setBackgroundResource(R.drawable.layout_item_bg);
                         db.updateCheckItem(item.get(position),context);
 //                        notifyItemChanged(position);
                     }
                     else {
                         holder.cb_todo_item.setPaintFlags(holder.cb_todo_item.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
                         item.get(position).setChecked(false);
-                        holder.cb_todo_item.setBackgroundColor(View.INVISIBLE);
+                        holder.cb_todo_item.setBackgroundResource(0);
                         db.updateCheckItem(item.get(position),context);
 //                        notifyItemChanged(position);
                     }
